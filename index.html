@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="StyleMVD: Tuning-Free Image-Guided Texture Stylization by Synchronized Multi-View Diffusion">
+  <meta name="keywords" content="StyleMVD, Texture, Style transfer, Stylization">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <title>StyleMVD: Tuning-Free Image-Guided Texture Stylization by Synchronized Multi-View Diffusion</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!-- for LaTeX format -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({            
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}            
+    });
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</head>
+<body>
+
+
+<!-- ========== Title ========== -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">StyleMVD: Tuning-Free Image-Guided Texture Stylization by Synchronized Multi-View Diffusion</h1>
+          <!-- <div style="font-size:x-large;">Preview</div><br> -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://Soulmates2.github.io/">Kunho Kim</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/sanghyeonan94/">Sanghyeon An</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://mhsung.github.io/">Minhyuk Sung</a><sup>2</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>RebuilderAI,</span>
+            <span class="author-block"><sup>2</sup>KAIST</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://StyleMVD.github.io"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>PDF (Coming soon!)</span>
+                </a>
+              </span>
+              <!-- arXiv Link. -->
+              <span class="link-block">
+                <a href="https://StyleMVD.github.io"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv (Coming soon!)</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/StyleMVD/StyleMVD"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========== Teaser ========== -->
+<div class="container">
+  <div class="content is-max-desktop">
+    <div class="columns is-centered has-text-centered is-flex-direction-column">
+      <!-- ========== Video ========== -->
+      <video id=“video” controls autoplay muted loop style="max-width:100%;">
+        <source src="./static/videos/video.mov">
+      </video>
+    </div>
+    <p>
+      <b>StyleMVD</b>, Our mesh texture stylization method enables high quality texture style transfer from 
+        a input style image while preserve the original content of mesh's texture using the pretrained diffusion model.
+    </p>
+  </div>
+</div>
+
+<script>
+  document.getElementById("video").play();
+</script>
+
+
+<!-- ========== Abstract ========== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered is-flex-direction-column">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            In this paper, we propose StyleMVD, a high quality texture generation framework guided by style image reference for textured 3D meshes. 
+            Style transfer in images has been extensively researched, but there has been relatively little exploration of style transfer in 3D meshes. 
+            Unlike in images, the key challenge in 3D lies in generating a consistent style across views. While existing methods generate mesh textures 
+            using pretrained text-to-image (T2I) diffusion models, accurately expressing the style of an image in text remains challenging. To overcome this, 
+            we propose StyleMVD module that enables to transfer the consistency style among the different views without additional fine-tuning from the 
+            reference style image. Specifically, StyleMVD converts existing self-attention into sample-wise self-attention to achieve global coherence, 
+            and decouples cross-attention in diffusion models to inject the style feature from the reference style image. Our experiments show that the proposed 
+            StyleMVD can achieve impressive results in both consistent image-to-texture style transfer and texture quality at high speed. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><hr>
+
+
+<!-- ========== Method ========== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered is-flex-direction-column">
+      <h2 class="title is-3">Method</h2>
+      <br>
+      <img src="./static/images/method.png" alt="method" style="max-width:100%;">
+      <br>
+      <div class="content has-text-justified">
+        <p>
+          The overview of StyleMVD pipeline. We first render the input textured mesh to generate condition images and view prompts based on the camera poses. 
+          Text embeddings are then extracted from the view prompts, while an image embedding is obtained from the input style image. Each view-dependent text 
+          embedding is concatenated with the image embedding and forwarded into the StyleMVD with condition images. After the view-dependent denoising process, 
+          the stylized images are unprojected onto the input mesh.
+        </p>
+      </div>
+
+      <br>
+      <img src="./static/images/unet.png" alt="method" style="max-width:100%;">
+      <br>
+      <div class="content has-text-justified">
+        <p>
+          Illustrations of the U-Net architectures in (a) Latent Diffusion Model (LDM) and (b) StyleMVD. The basic blocks of U-Net in LDM comprise a residual block, 
+          self-attention, and cross-attention, initially designed to accept only text embeddings. In our StyleMVD, we modify the self-attention to sample-wise 
+          self-attention and the cross-attention to decoupled cross-attention to facilitate 3D mesh texture stylization from the reference image.
+        </p>
+      </div>
+    </div>
+  </div>
+</section><br><br><hr>
+
+<!-- ========== Comparisons ========== -->
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered is-flex-direction-column"><br>
+    <h2 class="title is-3">Comparisons to other methods</h2>
+  </div>
+  <div class="container is-max-desktop">
+    <p>
+    </p>
+  </div>
+  <div class="columns is-centered has-text-centered is-flex-direction-column">
+    <div class="container" style="width:80%;">
+      <img src="./static/images/main_comparisons.png" alt="results" style="max-width:85%;">
+      <h2 class="subtitle has-text-centered">
+        
+      </h2>
+    </div>
+  </div>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+</section><br><br><hr>
+
+
+
+<!-- ========== BibTex ========== -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Citation</h2>
+    <div class="content has-text-justified">
+    <p>
+      Please consider citing our work if you find it useful.
+    </p>
+    </div>
+    <pre><code>
+      @article{kim2024stylemvd,
+        title = {{StyleMVD: Tuning-Free Image-Guided Texture Stylization by Synchronized Multi-View Diffusion}},
+        author = {Kim, Kunho and An, Sanghyeon and Sung, Minhyuk},
+        journal = {arxiv preprint arXiv:2109.00000},
+        year = {2024},
+      }
+    </code></pre>
+  </div>
+</section><hr>
+
+
+<!-- ========== Acknowledgements ========== -->
+<!-- <section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Acknowledgements</h2>
+  </div>
+</section> -->
+
+<script src="static/js/script.js"></script>
+<script>
+  new BeforeAfter({
+    id: "#example1"
+  });
+  new BeforeAfter({
+    id: "#example2"
+  });
+  new BeforeAfter({
+    id: "#example3"
+  });
+  new BeforeAfter({
+    id: "#example5"
+  });
+  new BeforeAfter({
+    id: "#example6"
+  });
+  new BeforeAfter({
+    id: "#example7"
+  });
+  new BeforeAfter({
+    id: "#example8"
+  });
+  new BeforeAfter({
+    id: "#example9"
+  });
+  new BeforeAfter({
+    id: "#example10"
+  });
+  new BeforeAfter({
+    id: "#example11"
+  });
+  new BeforeAfter({
+    id: "#example12"
+  });
+  new BeforeAfter({
+    id: "#example13"
+  });
+  new BeforeAfter({
+    id: "#example14"
+  });
+  new BeforeAfter({
+    id: "#example15"
+  });
+  new BeforeAfter({
+    id: "#example16"
+  });
+</script>
+
+<!-- ========== footer ========== -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/APAP_Main.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            The website is based on <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>. We thank 
+            <a href="https://keunhong.com/">Keunhong Park</a> for kindly open-sourcing the source code.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
